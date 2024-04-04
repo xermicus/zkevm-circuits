@@ -55,23 +55,23 @@ const TEST_MOCK_RANDOMNESS: u64 = 0x100;
 ///
 const TOTAL_CHUNKS: usize = 1;
 /// MAX_TXS
-const MAX_TXS: usize = 4;
+const MAX_TXS: usize = 16;
 /// MAX_WITHDRAWALS
 const MAX_WITHDRAWALS: usize = 4;
 /// MAX_CALLDATA
 const MAX_CALLDATA: usize = 512;
 /// MAX_RWS
-const MAX_RWS: usize = 5888;
+const MAX_RWS: usize = 5888 * 10;
 /// MAX_BYTECODE
-const MAX_BYTECODE: usize = 5000;
+const MAX_BYTECODE: usize = 5000 * 10;
 /// MAX_COPY_ROWS
-const MAX_COPY_ROWS: usize = 5888;
+const MAX_COPY_ROWS: usize = 5888 * 10;
 /// MAX_EVM_ROWS
-const MAX_EVM_ROWS: usize = 10000;
+const MAX_EVM_ROWS: usize = 10000 * 10;
 /// MAX_EXP_STEPS
-const MAX_EXP_STEPS: usize = 1000;
+const MAX_EXP_STEPS: usize = 1000 * 10;
 
-const MAX_KECCAK_ROWS: usize = 38000;
+const MAX_KECCAK_ROWS: usize = 38000 * 10;
 /// MAX_VERTICAL_CIRCUIT_ROWS
 const MAX_VERTICAL_CIRCUIT_ROWS: usize = 0;
 
@@ -91,12 +91,12 @@ const CIRCUITS_PARAMS: FixedCParams = FixedCParams {
 
 const EVM_CIRCUIT_DEGREE: u32 = 18;
 const STATE_CIRCUIT_DEGREE: u32 = 17;
-const TX_CIRCUIT_DEGREE: u32 = 20;
-const BYTECODE_CIRCUIT_DEGREE: u32 = 16;
+const TX_CIRCUIT_DEGREE: u32 = 22;
+const BYTECODE_CIRCUIT_DEGREE: u32 = 18;
 const COPY_CIRCUIT_DEGREE: u32 = 16;
-const KECCAK_CIRCUIT_DEGREE: u32 = 16;
+const KECCAK_CIRCUIT_DEGREE: u32 = 20;
 const SUPER_CIRCUIT_DEGREE: u32 = 20;
-const EXP_CIRCUIT_DEGREE: u32 = 16;
+const EXP_CIRCUIT_DEGREE: u32 = 18;
 const PI_CIRCUIT_DEGREE: u32 = 17;
 const ROOT_CIRCUIT_SMALL_DEGREE: u32 = 24;
 // Big is for SuperCircuit only
