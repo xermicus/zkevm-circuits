@@ -111,6 +111,7 @@ macro_rules! unroll_tests {
 }
 
 unroll_tests!(
+    (circuit_fibonacci_call_1, "Fibonacci call 1"),
     (circuit_block_transfer_0, "Transfer 0"),
     (circuit_multiple_transfers_0, "Multiple transfers 0"),
     (

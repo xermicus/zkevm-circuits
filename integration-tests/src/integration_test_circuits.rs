@@ -445,6 +445,7 @@ impl<C: SubCircuit<Fr> + Circuit<Fr>> IntegrationTest<C> {
 
     /// Run integration test at a block identified by a tag.
     pub async fn test_at_block_tag(&mut self, block_tag: &str, root: bool, actual: bool) {
+        let start = tokio::time::Instant::now();
         let block_num = *GEN_DATA.blocks.get(block_tag).unwrap();
         let proof_name = self.proof_name(block_tag);
         let (builder, _) = gen_inputs(block_num).await;
@@ -542,6 +543,13 @@ impl<C: SubCircuit<Fr> + Circuit<Fr>> IntegrationTest<C> {
                 self.test_mock(&circuit, instance);
             }
         }
+
+        let elapsed = tokio::time::Instant::now().duration_since(start);
+        log::info!(
+            "Elapsed: {}ms ({}s)",
+            elapsed.as_millis(),
+            elapsed.as_secs()
+        );
     }
 }
 

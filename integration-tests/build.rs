@@ -89,6 +89,7 @@ const CONTRACTS_PATH: &str = "contracts";
 const WARN: &[u64] = &[2018, 5667];
 /// List of contracts as (ContractName, ContractSolidityFile)
 const CONTRACTS: &[(&str, &str)] = &[
+    ("Fibonacci", "Fibonacci.sol"),
     ("Greeter", "Greeter.sol"),
     (
         "OpenZeppelinERC20TestToken",

@@ -77,6 +77,12 @@ macro_rules! declare_tests {
 // This test builds the complete circuit inputs for the block where 1 ETH is
 // transferred.
 declare_tests!(test_circuit_input_builder_block_transfer_0, "Transfer 0");
+// This test builds the complete circuit inputs for the block where the Fibonacci
+// contract is deployed.
+declare_tests!(
+    test_circuit_input_builder_deploy_fibonacci,
+    "Deploy Fibonacci"
+);
 // This test builds the complete circuit inputs for the block where the Greeter
 // contract is deployed.
 declare_tests!(test_circuit_input_builder_deploy_greeter, "Deploy Greeter");

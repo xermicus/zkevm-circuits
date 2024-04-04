@@ -18,6 +18,7 @@ use ethers::{
 };
 use integration_tests::{
     bindings_benchmarks::{benchmarks::benchmarks, Len},
+    bindings_fibonacci::fibonacci::fibonacci,
     bindings_greeter::greeter::greeter,
     bindings_openzeppelinerc20testtoken::openzeppelinerc_2_0testtoken::openzeppelinerc20testtoken as ozerc20tt,
     get_client, get_provider, get_wallet, log_init, GenDataOutput,
@@ -83,6 +84,25 @@ where
     // Set gas to avoid `eth_estimateGas` call
     let call = call.legacy();
     let call = call.gas(100_000);
+    call.tx
+}
+
+fn fibonacci_call<M>(
+    prov: Arc<M>,
+    contract_address: Address,
+    contract_abi: &abi::Contract,
+    n: U256,
+) -> TypedTransaction
+where
+    M: Middleware,
+{
+    let contract = Contract::new(contract_address, contract_abi.clone(), prov);
+    let call: ContractCall<M, _> = contract
+        .method::<_, U256>("fibonacci", (n,))
+        .expect("cannot construct fibonacci call");
+    // Set gas to avoid `eth_estimateGas` call
+    let call = call.legacy();
+    let call = call.gas(10_000_000);
     call.tx
 }
 
@@ -173,6 +193,19 @@ async fn main() {
     );
     blocks.insert("Deploy Greeter".to_string(), block_num.as_u64());
 
+    // Fibonacci
+    let fibonacci_deployer =
+        fibonacci::deploy(prov_wallet0.clone(), ()).expect("Error building deployment Transaction");
+    let (contract_abi, contract_address, block_number, _fibonacci_instance) =
+        deploy(fibonacci_deployer, "Fibonacci").await;
+
+    contracts.insert("fibonacci".to_string(), contract_abi.clone());
+    deployments.insert(
+        "fibonacci".to_string(),
+        (block_number.as_u64(), contract_address),
+    );
+    blocks.insert("Deploy Fibonacci".to_string(), block_num.as_u64());
+
     // OpenZeppelinERC20TestToken
     let ozerc20tt_deployer = ozerc20tt::deploy(prov_wallet0.clone(), prov_wallet0.address())
         .expect("Error building deployment Transaction");
@@ -253,6 +286,21 @@ async fn main() {
     }
     let block_num = prov.get_block_number().await.expect("cannot get block_num");
     blocks.insert("Multiple transfers 0".to_string(), block_num.as_u64());
+
+    // Fibonacci calls
+    info!("Doing Fibonacci call 1...");
+
+    let contract_address = deployments.get("fibonacci").expect("contract not found").1;
+    let contract_abi = &contracts.get("fibonacci").expect("contract not found");
+
+    let n = U256::from_dec_str("1").unwrap();
+    let tx = fibonacci_call(wallets[0].clone(), contract_address, contract_abi, n);
+    let receipt = send_confirm_tx(&wallets[0], tx).await;
+    assert_eq!(receipt.status, Some(U64::from(1u64)));
+    blocks.insert(
+        "Fibonacci call 1".to_string(),
+        receipt.block_number.unwrap().as_u64(),
+    );
 
     // ERC20 calls (OpenZeppelin)
     //

@@ -37,6 +37,7 @@ pub const CONTRACTS_PATH: &str = "contracts";
 pub const WARN: &[u64] = &[2018, 5667];
 /// List of contracts as (ContractName, ContractSolidityFile)
 pub const CONTRACTS: &[(&str, &str)] = &[
+    ("Fibonacci", "fibonacci/Fibonacci.sol"),
     ("Greeter", "greeter/Greeter.sol"),
     (
         "OpenZeppelinERC20TestToken",
@@ -152,6 +153,9 @@ pub struct CompiledContract {
 #[allow(missing_docs)]
 #[allow(clippy::all)]
 pub mod bindings_benchmarks;
+#[allow(missing_docs)]
+#[allow(clippy::all)]
+pub mod bindings_fibonacci;
 #[allow(missing_docs)]
 #[allow(clippy::all)]
 pub mod bindings_greeter;
